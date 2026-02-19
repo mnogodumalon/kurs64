@@ -1,0 +1,11 @@
+{
+  "sessions": [
+    {
+      "id": "f180fc9c-55e7-41fe-aea3-b1647758121e",
+      "name": "2026-02-19 11:05 - UI-First: kurs64",
+      "created_at": "2026-02-19T11:05:51.123736Z",
+      "last_used": "2026-02-19T11:05:51.123736Z"
+    }
+  ],
+  "active_session": "f180fc9c-55e7-41fe-aea3-b1647758121e"
+}
