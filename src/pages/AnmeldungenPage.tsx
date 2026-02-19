@@ -132,11 +132,7 @@ export default function AnmeldungenPage() {
                 <TableCell>{getTeilnehmerDisplayName(record.fields.teilnehmer)}</TableCell>
                 <TableCell>{getKurseDisplayName(record.fields.kurs)}</TableCell>
                 <TableCell className="text-muted-foreground">{formatDate(record.fields.anmeldedatum)}</TableCell>
-                <TableCell>
-                  <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium ${record.fields.bezahlt ? 'badge-bezahlt' : 'badge-offen'}`}>
-                    {record.fields.bezahlt ? 'Bezahlt' : 'Offen'}
-                  </span>
-                </TableCell>
+                <TableCell><span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${record.fields.bezahlt ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'}`}>{record.fields.bezahlt ? 'Ja' : 'Nein'}</span></TableCell>
                 <TableCell>
                   <div className="flex gap-1">
                     <Button variant="ghost" size="icon" onClick={() => setEditingRecord(record)}>

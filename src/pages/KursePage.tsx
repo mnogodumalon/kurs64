@@ -127,7 +127,6 @@ export default function KursePage() {
               <TableHead>Preis (€)</TableHead>
               <TableHead>Dozent</TableHead>
               <TableHead>Raum</TableHead>
-              <TableHead>Status</TableHead>
               <TableHead className="w-24">Aktionen</TableHead>
             </TableRow>
           </TableHeader>
@@ -143,13 +142,6 @@ export default function KursePage() {
                 <TableCell>{getDozentenDisplayName(record.fields.dozent)}</TableCell>
                 <TableCell>{getRaeumeDisplayName(record.fields.raum)}</TableCell>
                 <TableCell>
-                  {record.fields.status
-                    ? <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium badge-${record.fields.status}`}>
-                        {{ geplant: 'Geplant', aktiv: 'Aktiv', abgeschlossen: 'Abgeschlossen', abgesagt: 'Abgesagt' }[record.fields.status] ?? record.fields.status}
-                      </span>
-                    : '—'}
-                </TableCell>
-                <TableCell>
                   <div className="flex gap-1">
                     <Button variant="ghost" size="icon" onClick={() => setEditingRecord(record)}>
                       <Pencil className="h-4 w-4" />
@@ -163,7 +155,7 @@ export default function KursePage() {
             ))}
             {filtered.length === 0 && (
               <TableRow>
-                <TableCell colSpan={10} className="text-center py-16 text-muted-foreground">
+                <TableCell colSpan={9} className="text-center py-16 text-muted-foreground">
                   {search ? 'Keine Ergebnisse gefunden.' : 'Noch keine Kurse. Jetzt hinzufügen!'}
                 </TableCell>
               </TableRow>

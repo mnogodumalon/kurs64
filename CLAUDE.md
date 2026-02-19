@@ -190,7 +190,7 @@ CRITICAL: keep explanations short and concise when you're done!
 1. Plan your data model (entities, fields, relationships)
 2. Call `mcp__dashboard_tools__create_apps` with your data schema
 3. Call `mcp__dashboard_tools__generate_typescript` with `crud_scaffolds` (metadata is auto-read from file)
-4. Read the generated files (types, service, AND scaffold components if generated)
+4. The tool response contains ALL key file contents (types, service, App.tsx, Layout.tsx, DashboardOverview.tsx) — do NOT use Read on these files!
 5. Define your design system in `index.css`, customize Layout + Dashboard overview
 6. Build custom pages for entities NOT in crud_scaffolds (if any)
 7. Call `mcp__dashboard_tools__deploy_to_github`
@@ -230,7 +230,7 @@ generate_typescript → crud_scaffolds: ["team_members", "categories"]
 ```
 
 **After scaffold generation, YOUR JOB is:**
-1. Read ALL generated files to understand the structure
+1. The tool response ALREADY contains all key file contents (types, service, App.tsx, Layout constants, DashboardOverview) — do NOT Read them again!
 2. Define design system in `index.css` (fonts, colors, CSS variables including sidebar tokens)
 3. Build `DashboardOverview.tsx` (hero section, KPI cards with icons/gradients, charts with recharts)
 4. Build custom pages for entities NOT in crud_scaffolds

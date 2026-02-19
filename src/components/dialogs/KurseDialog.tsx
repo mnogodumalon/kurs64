@@ -78,13 +78,12 @@ export function KurseDialog({ open, onClose, onSubmit, defaultValues, dozentenLi
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="enddatum">Enddatum *</Label>
+            <Label htmlFor="enddatum">Enddatum</Label>
             <Input
               id="enddatum"
               type="date"
               value={fields.enddatum ?? ''}
               onChange={e => setFields(f => ({ ...f, enddatum: e.target.value }))}
-              required
             />
           </div>
           <div className="space-y-2">
@@ -136,22 +135,6 @@ export function KurseDialog({ open, onClose, onSubmit, defaultValues, dozentenLi
                     {r.fields.raumname ?? r.record_id}
                   </SelectItem>
                 ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="status">Status</Label>
-            <Select
-              value={fields.status ?? 'none'}
-              onValueChange={v => setFields(f => ({ ...f, status: v === 'none' ? undefined : v as 'geplant' | 'aktiv' | 'abgeschlossen' | 'abgesagt' }))}
-            >
-              <SelectTrigger id="status"><SelectValue placeholder="Auswählen..." /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">—</SelectItem>
-                <SelectItem value="geplant">Geplant</SelectItem>
-                <SelectItem value="aktiv">Aktiv</SelectItem>
-                <SelectItem value="abgeschlossen">Abgeschlossen</SelectItem>
-                <SelectItem value="abgesagt">Abgesagt</SelectItem>
               </SelectContent>
             </Select>
           </div>

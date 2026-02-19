@@ -488,28 +488,50 @@ async def main():
                 except Exception as e:
                     print(f"[SCAFFOLD] ⚠️ Error generating scaffolds: {e} — continuing without scaffolds")
             
-            # Build response
+            # Build response with inline file contents for key files
+            # This eliminates the need for the agent to Read files after generation
             app_names = list(metadata.get("apps", {}).keys())
             
             response_text = f"Generated {len(generated_files)} files:\n"
             response_text += "\n".join(f"  - {f}" for f in generated_files)
             
+            # Include key file contents inline — agent does NOT need to Read these
+            key_files = ["src/types/app.ts", "src/services/livingAppsService.ts"]
             if crud_scaffolds:
-                response_text += f"\n\nCRUD scaffolds generated for: {', '.join(crud_scaffolds)}"
-                response_text += "\n\nThe scaffolds include: React Router setup, sidebar Layout, CRUD pages with "
-                response_text += "table + search + create/edit dialogs + delete confirmation, and a Dashboard overview."
-                response_text += "\n\nYour next steps:"
-                response_text += "\n1. Read the generated files to understand the structure"
-                response_text += "\n2. Define your design system in index.css (fonts, colors, gradients)"
-                response_text += "\n3. Customize Layout.tsx sidebar to match your design"
-                response_text += "\n4. Build DashboardOverview.tsx (hero, KPIs, charts)"
+                key_files += ["src/App.tsx", "src/pages/DashboardOverview.tsx"]
+                # Layout.tsx: only include top section (constants + imports, not full JSX)
+                layout_path = Path("src/components/Layout.tsx")
+                if layout_path.exists():
+                    layout_content = layout_path.read_text()
+                    # Include everything up to the component function body
+                    cut_marker = "export function Layout"
+                    if cut_marker not in layout_content:
+                        cut_marker = "export default function Layout"
+                    if cut_marker in layout_content:
+                        layout_header = layout_content[:layout_content.index(cut_marker) + len(cut_marker)] + "() { ... }"
+                    else:
+                        layout_header = "\n".join(layout_content.split("\n")[:40])
+                    response_text += f"\n\n{'='*60}\n📄 src/components/Layout.tsx (constants + imports only)\n{'='*60}\n{layout_header}"
+            
+            for fpath in key_files:
+                fp = Path(fpath)
+                if fp.exists():
+                    response_text += f"\n\n{'='*60}\n📄 {fpath}\n{'='*60}\n{fp.read_text()}"
+            
+            if crud_scaffolds:
+                response_text += f"\n\n{'='*60}\n\nCRUD scaffolds generated for: {', '.join(crud_scaffolds)}"
+                response_text += "\nThe CRUD pages, dialogs, ConfirmDialog, StatCard, and PageShell are COMPLETE — do NOT read or rewrite them."
+                response_text += "\n\n⚡ ALL KEY FILES ARE ABOVE — do NOT use Read tool on them. Start coding IMMEDIATELY:"
+                response_text += "\n1. Define your design system in index.css (font, colors, CSS variables incl. sidebar tokens)"
+                response_text += "\n2. Customize APP_TITLE and APP_SUBTITLE constants in Layout.tsx"
+                response_text += "\n3. Build DashboardOverview.tsx (hero section, KPI cards with icons/gradients, charts)"
                 non_scaffolded = [k for k in app_names if k not in crud_scaffolds]
                 if non_scaffolded:
-                    response_text += f"\n5. Build custom pages for: {', '.join(non_scaffolded)}"
-                response_text += "\n6. Fine-tune generated CRUD pages (adjust design tokens)"
-                response_text += "\n7. Deploy with deploy_to_github"
+                    response_text += f"\n4. Build custom pages for: {', '.join(non_scaffolded)}"
+                response_text += f"\n{'5' if non_scaffolded else '4'}. npm run build → fix errors → deploy_to_github"
             else:
                 response_text += f"\n\nGenerated types for: {', '.join(app_names)}"
+                response_text += "\n\n⚡ KEY FILES ARE ABOVE — do NOT re-read them. Start coding immediately."
             
             return {"content": [{"type": "text", "text": response_text}]}
             
