@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Custom brand tokens */
+  --color-brand: var(--brand);
+  --color-brand-light: var(--brand-light);
+  --color-brand-muted: var(--brand-muted);
+  --color-success: var(--success);
+  --color-success-light: var(--success-light);
+  --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light);
+}
+
+:root {
+  --radius: 0.75rem;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+
+  /* Brand: deep indigo */
+  --brand: 243 75% 49%;
+  --brand-light: 243 100% 97%;
+  --brand-muted: 243 55% 92%;
+
+  /* Status colors */
+  --success: 152 69% 31%;
+  --success-light: 152 69% 94%;
+  --warning: 38 92% 50%;
+  --warning-light: 38 100% 93%;
+
+  /* Base palette — warm off-white */
+  --background: 220 20% 97%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 243 75% 49%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 20% 94%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 220 14% 93%;
+  --muted-foreground: 220 9% 46%;
+  --accent: 243 100% 97%;
+  --accent-foreground: 243 75% 45%;
+  --destructive: 0 84% 60%;
+  --border: 220 13% 89%;
+  --input: 220 13% 89%;
+  --ring: 243 75% 49%;
+
+  /* Charts */
+  --chart-1: 243 75% 49%;
+  --chart-2: 152 69% 35%;
+  --chart-3: 38 92% 50%;
+  --chart-4: 280 65% 55%;
+  --chart-5: 10 85% 58%;
+
+  /* Sidebar — deep navy */
+  --sidebar: 228 40% 13%;
+  --sidebar-foreground: 220 20% 92%;
+  --sidebar-primary: 243 75% 59%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 228 35% 20%;
+  --sidebar-accent-foreground: 220 20% 96%;
+  --sidebar-border: 228 30% 20%;
+  --sidebar-ring: 243 75% 59%;
+
+  /* Custom shadows */
+  --shadow-card: 0 1px 3px hsl(222 47% 11% / 0.06), 0 4px 12px hsl(222 47% 11% / 0.04);
+  --shadow-brand: 0 8px 24px hsl(243 75% 49% / 0.25);
+  --shadow-elevated: 0 4px 20px hsl(222 47% 11% / 0.1), 0 1px 4px hsl(222 47% 11% / 0.06);
+
+  /* Gradients */
+  --gradient-brand: linear-gradient(135deg, hsl(243 75% 49%), hsl(263 75% 58%));
+  --gradient-hero: linear-gradient(135deg, hsl(228 40% 13%), hsl(243 55% 25%));
+  --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 20% 98%));
+
+  /* Transitions */
+  --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Stat card gradient variants */
+.stat-card-brand {
+  background: var(--gradient-brand);
+  color: white;
+  box-shadow: var(--shadow-brand);
+}
+
+.stat-card-base {
+  background: var(--gradient-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Badge status styles */
+.badge-aktiv {
+  background: hsl(var(--success-light));
+  color: hsl(var(--success));
+  border: 1px solid hsl(var(--success) / 0.2);
+}
+.badge-geplant {
+  background: hsl(var(--brand-light));
+  color: hsl(var(--brand));
+  border: 1px solid hsl(var(--brand) / 0.2);
+}
+.badge-abgeschlossen {
+  background: hsl(220 14% 93%);
+  color: hsl(220 9% 40%);
+  border: 1px solid hsl(220 9% 80%);
+}
+.badge-abgesagt {
+  background: hsl(0 84% 97%);
+  color: hsl(0 84% 50%);
+  border: 1px solid hsl(0 84% 80%);
+}
+.badge-bezahlt {
+  background: hsl(var(--success-light));
+  color: hsl(var(--success));
+  border: 1px solid hsl(var(--success) / 0.2);
+}
+.badge-offen {
+  background: hsl(var(--warning-light));
+  color: hsl(var(--warning));
+  border: 1px solid hsl(var(--warning) / 0.3);
+}
